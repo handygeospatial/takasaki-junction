@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0"/>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script src="http://handygeospatial.github.io/mapsites/js/leaflet-hash.js"></script>
+<script src="http://handygeospatial.github.io/mapsites/js/TileLayer.GeoJSON.js"></script>
+<script src="http://handygeospatial.github.io/mapsites/js/corslite.js"></script>
+<style>
+body {padding: 0; margin: 0}
+html, body, #mapdiv {height: 100%; width: 100%;}
+.leaflet-container {background: #fff;}
+</style>
+</head>
+<body>
+<div id="mapdiv">
+<script>
+var std = L.tileLayer(
+'http://cyberjapandata-t{s}.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+  attribution: "地理院タイル（標準地図）",
+  subdomains: '123', maxNativeZoom: 18, maxZoom: 20, opacity: 0.2
+});
+
+var rdcl = new L.TileLayer.GeoJSON(
+'http://cyberjapandata-t{s}.gsi.go.jp/xyz/experimental_rdcl/{z}/{x}/{y}.geojson', {
+  attribution: "地理院ベクトルタイル提供実験（道路中心線）" +
+  "<a target='blank' href='http://gsi-cyberjapan.github.io/" +
+  "vector-tile-experiment/DataSpecification.html'>仕様</a>",
+  subdomains: '123', minZoom: 14, maxNativeZoom: 16, maxZoom: 20
+});
+
+var map = L.map('mapdiv', {
+  center: [36.32088, 139.07543], zoom: 16,
+  layers: [std, rdcl]});
+
+var hash = L.hash(map);
+L.control.layers({}, {
+  '地理院タイル（標準地図）': std,
+  '地理院ベクトルタイル提供実験（道路中心線）': rdcl
+}).addTo(map);
+</script>
+</body>
+</html>

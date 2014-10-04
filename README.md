@@ -3,4 +3,4 @@ takasaki-junction
 
 Road Centerline Design Experiment
 
-handygeospatial's own extension.
+handygeospatial's own work branch.
